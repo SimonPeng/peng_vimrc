@@ -3,7 +3,8 @@
 "====================================================================
 " allow deleting single characters without updating the default register
 " "_: black hole register
-"
+"----------------------------
+" normal mode - delete
 nnoremap s "ss
 nnoremap S "sS
 
@@ -18,10 +19,32 @@ nnoremap d  "dd
 nnoremap dd "ddd
 nnoremap D  "dd$
 
-" paste in visual mode without updating the default register
-vnoremap p "cc<esc>p
+"----------------------------
+" visual mode - delete
+vnoremap s "ss
+vnoremap S "sS
+
+vnoremap x "xx
+vnoremap X "xX
+
+vnoremap c  "cc
+vnoremap cc "ccc
+vnoremap C  "cc$
+
+vnoremap d  "dd
+vnoremap dd "ddd
+vnoremap D  "dd$
 
 vnoremap <c-x> "xx
+
+"----------------------------
+" visual mode - paste
+"----------------------------
+" paste in visual mode without updating the default register
+" copy original select to register "o"
+vnoremap p "oc<esc>p
+
+
 "-------------------------------------------------
 " remap register
 "-------------------------------------------------
@@ -145,7 +168,7 @@ vnoremap <leader><leader>y "cc<esc>"yp
 vnoremap <leader><leader>z "cc<esc>"zp
 
 " paste system clipboard
-vnoremap <leader><leader>* "cc<esc>"*p
+vnoremap <leader><leader>* "oc<esc>"*p
 
 "----------------------------
 " insert mode - paste
@@ -211,28 +234,5 @@ cnoremap <leader><leader>z <c-r>z
 " paste system clipboard
 cnoremap <leader><leader>* <c-r>*
 
-"--------------------------------------------------
-"nnoremap <leader>yq   "qy
-"nnoremap <leader>yw   "wy
-"nnoremap <leader>ye   "ey
-"nnoremap <leader>yr   "ry
-"nnoremap <leader>yt   "ty
-"
-"vnoremap <leader>yq   "qy
-"vnoremap <leader>yw   "wy
-"vnoremap <leader>ye   "ey
-"vnoremap <leader>yr   "ry
-"vnoremap <leader>yt   "ty
-"
-"nnoremap <leader><leader>q "qp
-"nnoremap <leader><leader>w "wp
-"nnoremap <leader><leader>e "ep
-"nnoremap <leader><leader>r "rp
-"nnoremap <leader><leader>t "tp
-"
-"vnoremap <leader><leader>q "cc<esc>"qp
-"vnoremap <leader><leader>w "cc<esc>"wp
-"vnoremap <leader><leader>e "cc<esc>"ep
-"vnoremap <leader><leader>r "cc<esc>"rp
-"vnoremap <leader><leader>t "cc<esc>"tp
+
 

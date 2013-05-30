@@ -46,21 +46,21 @@ set backspace=eol,start,indent
 "set whichwrap+=<,>,h,l
 set whichwrap+=<,>,h,l,[,]
 
-set magic " ³]¸mÅ]³N
+set magic " è¨­ç½®é­”è¡“
 
 set showcmd     "show incomplete cmds down the bottom
 set showmode    "show current mode down the bottom
 
-" ±Ò°Êªº®É­Ô¤£Åã¥Ü¨º­Ó´©§U¯Á°¨¨½¨àµ£ªº´£¥Ü
+" å•Ÿå‹•çš„æ™‚å€™ä¸é¡¯ç¤ºé‚£å€‹æ´åŠ©ç´¢é¦¬é‡Œå…’ç«¥çš„æç¤º
 set shortmess=atI
 
-" ³q¹L¨Ï¥Î: commands©R¥O¡A§i¶D§Ú­Ì¤å¥óªº­þ¤@¦æ³Q§ïÅÜ¹L
+" é€šéŽä½¿ç”¨: commandså‘½ä»¤ï¼Œå‘Šè¨´æˆ‘å€‘æ–‡ä»¶çš„å“ªä¸€è¡Œè¢«æ”¹è®ŠéŽ
 set report=0
 
 " no annoying sound on errors
 set noerrorbells
 set novisualbell
-set t_vb= " ¸mªÅ¿ù»~¹aÁnªº²×ºÝ¥N½X
+set t_vb= " ç½®ç©ºéŒ¯èª¤éˆ´è²çš„çµ‚ç«¯ä»£ç¢¼
 
 " won't see "E37: No write since last change (add ! to override)"
 " A buffer becomes hidden when it is abandoned
@@ -157,7 +157,7 @@ endif
 " => text, tab and indent related
 "====================================================================
 
-" ¦Û°Ê®æ¦¡¤Æ
+" è‡ªå‹•æ ¼å¼åŒ–
 " auto format
 "set formatoptions=tcrqn
 
@@ -240,9 +240,9 @@ set ffs=dos,unix,mac
 
 "set fileencoding=utf-8
 
-"set fencs=utf-8,big5,gbk,euc-jp,utf-16le
 "set fencs=utf-8,gbk,big5,euc-jp,utf-16le
-"set fenc=utf-8 enc=utf-8 tenc=utf-8
+set fencs=utf-8,big5,gbk,euc-jp,utf-16le
+set fenc=utf-8 enc=utf-8 tenc=utf-8
 
 "au BufNewFile,BufRead *.log set filetype=psy
 au BufNewFile,BufRead *.log set filetype=c
@@ -263,9 +263,9 @@ set matchtime=5
 set incsearch
 set hlsearch
 
-"set nowrapscan " ¸T¤î¦b·j¯Á¨ì¤å¥ó¨âºÝ®É­«·s·j¯Á
+"set nowrapscan " ç¦æ­¢åœ¨æœç´¢åˆ°æ–‡ä»¶å…©ç«¯æ™‚é‡æ–°æœç´¢
 
-" ¿é¤J:set list©R¥O¬OÀ³¸ÓÅã¥Ü¨ÇÔ£¡H
+" è¼¸å…¥:set listå‘½ä»¤æ˜¯æ‡‰è©²é¡¯ç¤ºäº›å•¥ï¼Ÿ
 "set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 
 
@@ -273,12 +273,12 @@ set hlsearch
 " => fold
 "====================================================================
 
-set foldenable             " ¶}©lºPÅ|
-set foldmethod=syntax      " ³]¸m»yªkºPÅ|
-set foldcolumn=0           " ³]¸mºPÅ|°Ï°ìªº¼e«×
-setlocal foldlevel=1       " ³]¸mºPÅ|¼h¼Æ¬°
-set foldlevel=100          " ¤å¥ó¥´¶}®É¤£ºPÅ|
-set foldclose=all          " ³]¸m¬°¦Û°ÊÃö³¬ºPÅ|
+set foldenable             " é–‹å§‹æ‘ºç–Š
+set foldmethod=syntax      " è¨­ç½®èªžæ³•æ‘ºç–Š
+set foldcolumn=0           " è¨­ç½®æ‘ºç–Šå€åŸŸçš„å¯¬åº¦
+setlocal foldlevel=1       " è¨­ç½®æ‘ºç–Šå±¤æ•¸ç‚º
+set foldlevel=100          " æ–‡ä»¶æ‰“é–‹æ™‚ä¸æ‘ºç–Š
+set foldclose=all          " è¨­ç½®ç‚ºè‡ªå‹•é—œé–‰æ‘ºç–Š
 
 "====================================================================
 " => $VIMFILES
