@@ -242,7 +242,7 @@ set ffs=dos,unix,mac
 
 "set fencs=utf-8,gbk,big5,euc-jp,utf-16le
 set fencs=utf-8,big5,gbk,euc-jp,utf-16le
-set fenc=utf-8 enc=utf-8 tenc=utf-8
+"set fenc=utf-8 enc=utf-8 tenc=utf-8   " right-key menu's font incorrect
 
 "au BufNewFile,BufRead *.log set filetype=psy
 au BufNewFile,BufRead *.log set filetype=c

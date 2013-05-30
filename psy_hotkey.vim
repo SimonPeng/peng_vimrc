@@ -32,6 +32,18 @@ nnoremap <a-y> :reg<cr>
 source c:\vim\psy_reg.vim
 
 set grepprg=grep\ -nH\ $*
+"set grepprg=grep\ -nH\ $*\ * 
+
+"set grepprg=C:/MinGW/msys/1.0/bin/egrep\ -nR\ $*\ *
+"The '$' is where your expression will go, 
+"the '' at the end means every file type. 
+"Grep is fast enough or my codebase is small enough 
+"that I don't care to limit the file types. 
+"Using the -n and -R flags will make it return results pretty much like vimgrep 
+"(obviously the patter expressions will be different).
+
+" in command line, 
+" EX: grep -i word *.c *.h
 
 "====================================================================
 " grep search result to quickfix
@@ -40,7 +52,7 @@ let USE_INTERNAL_GREP=0
 
 if (USE_INTERNAL_GREP == 1)
     " specific files and folder
-    "nnoremap <a-g>   :vimgrep /<c-R>=expand("<cword>")<cr>/j *.{c,h} ..\last1\* subfolder\*.{c,h}<cr> :copen<cr>
+    "nnoremap <a-g>   :vimgrep /<c-r>=expand("<cword>")<cr>/j *.{c,h} ..\last1\* subfolder\*.{c,h}<cr> :copen<cr>
 
     "----------------------------
     " search in current folder recursively
