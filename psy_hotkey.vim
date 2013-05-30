@@ -26,32 +26,42 @@ let g:mapleader=","
 "====================================================================
 " copy and paste hot key
 "====================================================================
+" show registers information
 nnoremap <a-y> :reg<cr>
 
 source c:\vim\psy_reg.vim
 
+set grepprg=grep\ -nH\ $*
+
 "====================================================================
 " grep search result to quickfix
 "====================================================================
-" find in current file
-"nnoremap <a-g>   :vimgrep /<c-R>=expand("<cword>")<cr>/ %<cr> :copen<cr>
-" specific files and folder
-"nnoremap <a-g>   :vimgrep /<c-R>=expand("<cword>")<cr>/j *.c *.h ..\other\* other\*.c *.h<cr> :copen<cr>
+let USE_INTERNAL_GREP=0
 
+if (USE_INTERNAL_GREP == 1)
+    " specific files and folder
+    "nnoremap <a-g>   :vimgrep /<c-R>=expand("<cword>")<cr>/j *.{c,h} ..\last1\* subfolder\*.{c,h}<cr> :copen<cr>
+
+    "----------------------------
+    " search in current folder recursively
+    au BufRead,BufNewFile *.* noremap <a-f> :vimgrep! /<c-r>=expand("<cword>")<cr>/j %<cr> :copen<cr>
+    au BufRead,BufNewFile *.c,*.h noremap <a-f> :vimgrep! /<c-r>=expand("<cword>")<cr>/j *.{c,h} **\*.{c,h}<cr> :copen<cr>
+
+else 
+    nnoremap <a-f> :Grep<cr><cr><cr>
+    " command line ---> :grep memset %
+    "command! -nargs=+ RGrep execute 'silent grep! <args>' | cwindow | redraw!
+endif
+
+
+"----------------------------
 " search in current file
-au BufRead,BufNewFile *.* noremap <a-g> :vimgrep! /<c-r>=expand("<cword>")<cr>/j %<cr> :copen<cr>
-au BufRead,BufNewFile *.* noremap <a-f> :vimgrep! /<c-r>=expand("<cword>")<cr>/j %<cr> :copen<cr>
-
-" search in current folder recursively
-au BufRead,BufNewFile *.c,*.h noremap <a-f> :vimgrep! /<c-r>=expand("<cword>")<cr>/j *.c *.h **\*.c **\*.h<cr> :copen<cr>
-
-
-"nnoremap <a-f> :Grep<cr><cr><cr>
-nnoremap <a-z> :call QFSwitch()<cr>
+nnoremap <a-g> :vimgrep! /<c-r>=expand("<cword>")<cr>/j %<cr> :copen<cr>
 
 nnoremap <a-e> :cnext<cr>
 nnoremap <a-r> :cprev<cr>
-"================================================
+nnoremap <a-z> :call QFSwitch()<cr>
+"----------------------------
 function! QFSwitch()
 	redir => ls_output
 	execute ':silent! ls'
@@ -217,7 +227,7 @@ endfunction
 "====================================================================
 " complier wdk driver 
 "====================================================================
-let PSY_COMPLIER_MODE = 0
+let PSY_COMPLIER_MODE=0
 
 if (PSY_COMPLIER_MODE == 0)  
 	" complier and make WDK
@@ -279,15 +289,26 @@ nnoremap <leader>cd :cd %:p:h<cr>
 :ab #e ^V^H*****************************************/
 
 "====================================================================
+"
 " can use snipMate plugin to replace
+"
 "====================================================================
 inoremap #t0 TRACE("");<left><left><left>
 inoremap #t1 TRACE1("");<left><left><left>
 inoremap #t2 TRACE2("");<left><left><left>
 inoremap #tx TRACEX(", XXXXXXXXXXXXXXX")<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
 inoremap #tf TRACE("%s ===>", __FUNCTION__);
+
 "====================================================================
+" for custom search hotkey
 "====================================================================
+" vimgrep in current file
+cnoremap gf vimgrep //j %<left><left><left><left>
+
+" vimgrep in current directory
+"cnoremap gd vimgrep //j *.c *.h<left><left><left><left><left><left><left><left><left><left>
+cnoremap gd vimgrep //j *.{c,cpp,h,hpp}<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+
 "====================================================================
 "====================================================================
 "====================================================================

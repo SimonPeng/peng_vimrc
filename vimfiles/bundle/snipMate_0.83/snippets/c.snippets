@@ -108,3 +108,20 @@ snippet .
 	[${1}]${2}
 snippet un
 	unsigned
+
+# TRACE (tr+num): variable count
+snippet tr0
+	TRACE0("${1:info}");
+snippet tr1
+	TRACE0("${1:info}: ${2:var1}", ${3:var1});
+snippet tr2
+	TRACE0("${1:info}: ${2:var1}, ${4:var2}", ${3:var1}, ${5:var2});
+snippet tr3
+	TRACE0("${1:info}: ${2:var1}, ${4:var2}, ${6:var3}", ${3:var1}, ${5:var2}, ${7:var3});
+
+snippet trx
+	TRACEX("${1:info}, XXXXXXXXXXXXXXXXXXXX");	
+snippet trx1
+	TRACEX("${1:info}: ${2:var1}, XXXXXXXXXXXXXXXXXXXX", ${3:var1});	
+snippet trx2
+	TRACEX("${1:info}: ${2:var1}, ${4:var2}, XXXXXXXXXXXXXXXXXXXX", ${3:var1}, ${5:var2});	

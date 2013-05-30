@@ -1,7 +1,7 @@
 " File: grep.vim
 " Author: Yegappan Lakshmanan (yegappan AT yahoo DOT com)
-" Version: 1.11
-" Last Modified: April 24, 2013
+" Version: 1.9
+" Last Modified: September 10, 2007
 " 
 " Overview
 " --------
@@ -197,11 +197,7 @@
 "       :let Agrep_Path = 'd:\tools\agrep.exe'
 "
 " The 'Grep_Find_Path' variable is used to locate the find utility. By
-" default, this is set to 'find'. Note that on MS-Windows, there is a find.exe
-" that is part of the base OS. This find utility is different from the the
-" Unix find utility. You cannot use this utility with this plugin. You must
-" install the Unix compatible find utility and set the Grep_Find_Path variable
-" to point to the location of the utility. You can change this using the let
+" default, this is set to d:\tools\find.exe. You can change this using the let
 " command:
 "
 "       :let Grep_Find_Path = 'd:\tools\find.exe'
@@ -255,13 +251,13 @@
 "
 "       :let Grep_Find_Use_Xargs = 0
 " 
-" To handle file names with space characters in them, the xargs utility is
-" invoked with the '-0' argument. If the xargs utility in your system doesn't
-" accept the '-0' argument, then you can change the Grep_Xargs_Options
-" variable. For example, to use the '--null' xargs argument, you can use the
-" following command:
+" To handle file names with space characters in them, the xargs utility
+" is invoked with the '--null' argument. If the xargs utility in your system
+" doesn't accept the '--null' argument, then you can change the
+" Grep_Xargs_Options variable. For example, to use the '--print0' xargs
+" argument, you can use the following command:
 "
-" 	:let Grep_Xargs_Options = '--null'
+" 	:let Grep_Xargs_Options = '--print0'
 "
 " The Grep_Cygwin_Find variable should be set to 1, if you are using the find
 " utility from the cygwin package. This setting is used to handle the
@@ -356,7 +352,7 @@ endif
 
 " The command-line arguments to supply to the xargs utility
 if !exists('Grep_Xargs_Options')
-    let Grep_Xargs_Options = '-0'
+    let Grep_Xargs_Options = '--null'
 endif
 
 " The find utility is from the cygwin package or some other find utility.
@@ -408,36 +404,7 @@ endif
 " RunGrepCmd()
 " Run the specified grep command using the supplied pattern
 function! s:RunGrepCmd(cmd, pattern, action)
-    if has('win32') && !has('win32unix') && !has('win95')
-                \ && (&shell =~ 'cmd.exe')
-        " Windows does not correctly deal with commands that have more than 1
-        " set of double quotes.  It will strip them all resulting in:
-        " 'C:\Program' is not recognized as an internal or external command
-        " operable program or batch file.  To work around this, place the
-        " command inside a batch file and call the batch file.
-        " Do this only on Win2K, WinXP and above.
-        let s:grep_tempfile = fnamemodify(tempname(), ':h') . '\mygrep.cmd'
-        if v:version >= 700
-            call writefile([a:cmd], s:grep_tempfile, "b")
-        else
-            exe 'redir! > ' . s:grep_tempfile
-            silent echo a:cmd
-            redir END
-        endif
-
-	let cmd_output = system('"' . s:grep_tempfile . '"')
-    else
-        let cmd_output = system(a:cmd)
-    endif
-
-    if exists('s:grep_tempfile')
-        " Delete the temporary cmd file created on MS-Windows
-        call delete(s:grep_tempfile)
-    endif
-
-    " Do not check for the shell_error (return code from the command).
-    " Even if there are valid matches, grep returns error codes if there
-    " are problems with a few input files.
+    let cmd_output = system(a:cmd)
 
     if cmd_output == ""
         echohl WarningMsg | 
@@ -503,11 +470,7 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
             let pattern = g:Grep_Shell_Quote_Char . a:{argcnt} . 
                             \ g:Grep_Shell_Quote_Char
         else
-            if filepattern != ""
-                let filepattern = filepattern . " " . a:{argcnt}
-            else
-                let filepattern = a:{argcnt}
-            endif
+            let filepattern = filepattern . " " . a:{argcnt}
         endif
         let argcnt= argcnt + 1
     endwhile
@@ -545,7 +508,6 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
         endif
         let pattern = g:Grep_Shell_Quote_Char . pattern . 
                         \ g:Grep_Shell_Quote_Char
-        echo "\r"
     endif
 
     let cwd = getcwd()
@@ -560,7 +522,6 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
     if startdir == ""
         return
     endif
-    echo "\r"
 
     if filepattern == ""
         let filepattern = input("Search in files matching pattern: ", 
@@ -568,7 +529,6 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
         if filepattern == ""
             return
         endif
-        echo "\r"
     endif
 
     let txt = filepattern . ' '
@@ -616,7 +576,7 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
     endif
 
     if g:Grep_Find_Use_Xargs == 1
-        let cmd = g:Grep_Find_Path . ' "' . startdir . '"'
+        let cmd = g:Grep_Find_Path . " " . startdir
         let cmd = cmd . " " . find_prune . " -prune -o"
         let cmd = cmd . " " . find_skip_files
         let cmd = cmd . " " . find_file_pattern
@@ -658,14 +618,7 @@ function! s:RunGrepSpecial(cmd_name, which, action, ...)
 
         while i <= last_bufno
             if bufexists(i) && buflisted(i)
-                let fullpath = fnamemodify(bufname(i), ':p')
-                if filereadable(fullpath)
-                    if v:version >= 702
-                        let filenames = filenames . " " . fnameescape(fullpath)
-                    else
-                        let filenames = filenames . " " . fullpath
-                    endif
-                endif
+                let filenames = filenames . " " . bufname(i)
             endif
             let i = i + 1
         endwhile
@@ -731,7 +684,6 @@ function! s:RunGrepSpecial(cmd_name, which, action, ...)
         if pattern == ""
             return
         endif
-        echo "\r"
     endif
 
     let pattern = g:Grep_Shell_Quote_Char . pattern . g:Grep_Shell_Quote_Char
@@ -809,7 +761,6 @@ function! s:RunGrep(cmd_name, grep_cmd, action, ...)
         endif
         let pattern = g:Grep_Shell_Quote_Char . pattern .
                         \ g:Grep_Shell_Quote_Char
-        echo "\r"
     endif
 
     if filenames == ""
@@ -822,7 +773,6 @@ function! s:RunGrep(cmd_name, grep_cmd, action, ...)
         if filenames == ""
             return
         endif
-        echo "\r"
     endif
 
     " Add /dev/null to the list of filenames, so that grep print the
