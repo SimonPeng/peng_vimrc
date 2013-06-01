@@ -2,15 +2,18 @@
 "====================================================================
 "  change default vim key setting
 "====================================================================
+
 imap jj <esc>
 imap <a-c> <esc>
 vmap <a-c> <esc>
 
+" replace 'SHIFT+;' (:) with ';'
+" ; -> :
 nnoremap ; :
 
 "-------------------------------------------------
-" windows save file 
-noremap <c-s> :w<cr>
+" windows default hot key
+nnoremap <c-s> :w<cr>
 
 "-------------------------------------------------
 inoremap <a-n> <c-n>
@@ -187,7 +190,8 @@ endfunction
 
 "====================================================================
 " do not show search highlight
-nnoremap <a-v> 	:noh<cr> 
+"nnoremap <a-v> 	:noh<cr> 
+nnoremap <a-v> 	:set hls!<cr>
 
 "====================================================================
 " switch line number
@@ -322,6 +326,31 @@ cnoremap gf vimgrep //j %<left><left><left><left>
 cnoremap gd vimgrep //j *.{c,cpp,h,hpp}<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
 
 "====================================================================
+function! RangeSearch(direction)
+  call inputsave()
+  let g:srchstr = input(a:direction)
+  call inputrestore()
+  if strlen(g:srchstr) > 0
+    let g:srchstr = g:srchstr.
+          \ '\%>'.(line("'<")-1).'l'.
+          \ '\%<'.(line("'>")+1).'l'
+  else
+    let g:srchstr = ''
+  endif
+endfunction
+
+vnoremap <silent> / :<C-U>call RangeSearch('/')<CR>:if strlen(g:srchstr) > 0\|exec '/'.g:srchstr\|endif<CR>
+vnoremap <silent> ? :<C-U>call RangeSearch('?')<CR>:if strlen(g:srchstr) > 0\|exec '?'.g:srchstr\|endif<CR>
+
+" http://vim.wikia.com/wiki/Search_only_over_a_visual_range
+"A much simpler version is to: make your visual selection and then hit <ESC> (returning to normal mode). 
+"Then prepend \%V to your search, like this:
+":/\%Vpattern
+"
+"Then press enter. If you still want to see your visual selection while you are "n/N"ing 
+"to skip around to the other matches, then just type gv to reselect the last visual selection.
+
+
 "====================================================================
 "====================================================================
 "====================================================================

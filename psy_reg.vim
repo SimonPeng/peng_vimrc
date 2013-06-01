@@ -19,6 +19,9 @@ nnoremap d  "dd
 nnoremap dd "ddd
 nnoremap D  "dd$
 
+nnoremap <del> "d<del>
+nnoremap <bs> "x<del>
+
 "----------------------------
 " visual mode - delete
 vnoremap s "ss
@@ -35,6 +38,9 @@ vnoremap d  "dd
 vnoremap dd "ddd
 vnoremap D  "dd$
 
+vnoremap <del> "d<del>
+vnoremap <bs> "x<del>
+
 vnoremap <c-x> "xx
 
 "----------------------------
@@ -42,7 +48,7 @@ vnoremap <c-x> "xx
 "----------------------------
 " paste in visual mode without updating the default register
 " copy original select to register "o"
-vnoremap p "oc<esc>p
+vnoremap p "cc<esc>p
 
 
 "-------------------------------------------------
@@ -168,7 +174,7 @@ vnoremap <leader><leader>y "cc<esc>"yp
 vnoremap <leader><leader>z "cc<esc>"zp
 
 " paste system clipboard
-vnoremap <leader><leader>* "oc<esc>"*p
+vnoremap <leader><leader>* "cc<esc>"*p
 
 "----------------------------
 " insert mode - paste

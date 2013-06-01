@@ -225,7 +225,14 @@ set noswapfile
 " prevents automatic write backup
 set nowb 
 
+"在命令行打開文件或者輸入命令時按Tab（以輸入字符為前綴補全）
+"或者Ctrl-d（列出包含輸入字符的所有匹配項目）自動補全
+"set wildmode=list:full
 set wildmenu
+
+"in ESC: (command mode), disable auto completion next part
+"set wildmode=list:longest
+"set wildignore+=*.obj,*.exe,*.lib,*.ncb,*.opt,*.plg,.svn,.git
 
 "-----------------------------
 " set file type
@@ -331,4 +338,9 @@ source c:\vim\psy_win.vim
 "  endif
 "  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 "endfunction
+
+
+
+
+
 
