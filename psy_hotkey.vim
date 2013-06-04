@@ -4,6 +4,7 @@
 "====================================================================
 
 imap jj <esc>
+imap jk <esc>
 imap <a-c> <esc>
 vmap <a-c> <esc>
 
@@ -11,6 +12,16 @@ vmap <a-c> <esc>
 " ; -> :
 nnoremap ; :
 
+noremap <right> l
+noremap <left>  h
+noremap <up>    k
+noremap <down>  j
+
+
+nmap <c-k> <c-w>k
+nmap <c-j> <c-w>j
+nmap <c-h> <c-w>h
+nmap <c-l> <c-w>l
 "-------------------------------------------------
 " windows default hot key
 nnoremap <c-s> :w<cr>
